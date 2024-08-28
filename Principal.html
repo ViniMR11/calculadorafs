@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Energética</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(to right, #e0bbff, #4e2367); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1, h2 {
+            color: #320521;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 600px;
+        }
+        li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #ffffff;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+        li img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+        li:hover {
+            background-color: #e0f7fa;
+        }
+        .result, .calculator {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+            background: linear-gradient(to right, #e0bbff, #957DAD); /* Degradê */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .calculator input, .calculator button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .calculator button {
+            background-color: #ad4caf;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .calculator button:hover {
+            background-color: #6559a1;
+        }
+        .result-bar {
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            width: 100%;
+            max-width: 600px;
+        }
+        .bar {
+            width: 60px;
+            background-color: #6d4caf;
+            text-align: center;
+            color: white;
+            border-radius: 5px;
+            margin: 0 10px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            transition: background-color 0.3s, height 0.3s;
+        }
+        .bar span {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Calculadora Energética</h1>
+    
+    <ul id="aparelhos">
+        <li data-watts="100" data-horas="5">
+            <img src="img/lâmpada.png" alt="Lâmpada LED">
+            <strong>100W</strong> - Lâmpada LED
+        </li>
+        <li data-watts="1500" data-horas="3">
+            <img src="img/micro.png" alt="Micro-ondas">
+            <strong>1500W</strong> - Micro-ondas
+        </li>
+        <li data-watts="200" data-horas="8">
+            <img src="img/ventilador.png" alt="Ventilador">
+            <strong>200W</strong> - Ventilador
+        </li>
+        <li data-watts="1000" data-horas="2">
+            <img src="img/cafete.png" alt="Cafeteira">
+            <strong>1000W</strong> - Cafeteira
+        </li>
+        <li data-watts="150" data-horas="10">
+            <img src="img/tv.png" alt="Televisão">
+            <strong>150W</strong> - Televisão
+        </li>
+</li>
+<li data-watts="600" data-horas="5">
+    <img src="img/pc.png" alt="pc-G">
+    <strong>600W</strong> - Computador
+</li>
+    </ul>
+
+    <div class="result" id="resultado"></div>
+
+    <div class="calculator">
+        <h2>Calculadora de Consumo Total</h2>
+        <label for="watts">Potência (Watts):</label><br>
+        <input type="number" id="watts" placeholder="Digite a potência"><br>
+        <label for="horas">Horas de Uso por Dia:</label><br>
+        <input type="number" id="horas" placeholder="Digite as horas de uso"><br>
+        <label for="quantidade">Quantidade de Aparelhos:</label><br>
+        <input type="number" id="quantidade" placeholder="Digite a quantidade"><br>
+        <label for="tarifa">Tarifa de Energia (R$/kWh):</label><br>
+        <input type="number" id="tarifa" placeholder="Digite a tarifa em R$"><br>
+        <button onclick="calcularConsumo()">Calcular Consumo</button>
+        <div class="result" id="resultado-calculadora"></div>
+    </div>
+
+    <div class="result-bar" id="grafico"></div>
+
+    <script>
+        const aparelhos = document.querySelectorAll('#aparelhos li');
+
+        aparelhos.forEach(aparelho => {
+            aparelho.addEventListener('click', () => {
+                const watts = aparelho.getAttribute('data-watts');
+                const horas = aparelho.getAttribute('data-horas');
+                const consumoDiario = (watts * horas) / 1000; // Consumo em kWh
+
+                document.getElementById('resultado').innerHTML = `
+                    <h2>${aparelho.innerText}</h2>
+                    <p>Consumo de energia diário: ${consumoDiario.toFixed(2)} kWh</p>
+                    <p>Potência: ${watts} Watts</p>
+                    <p>Horas de uso por dia: ${horas} horas</p>
+                `;
+            });
+        });
+
+        function calcularConsumo() {
+            const watts = document.getElementById('watts').value;
+            const horas = document.getElementById('horas').value;
+            const quantidade = document.getElementById('quantidade').value;
+            const tarifa = document.getElementById('tarifa').value;
+
+            if (watts && horas && quantidade && tarifa) {
+                const consumoDiario = (watts * horas * quantidade) / 1000; // Consumo em kWh
+                const consumoMensal = consumoDiario * 30; // Consumo mensal em kWh
+                const custoMensal = consumoMensal * tarifa; // Custo mensal em R$
+
+                document.getElementById('resultado-calculadora').innerHTML = `
+                    <h3>Consumo Total</h3>
+                    <p>Consumo diário: ${consumoDiario.toFixed(2)} kWh</p>
+                    <p>Consumo mensal: ${consumoMensal.toFixed(2)} kWh</p>
+                    <p>Custo mensal estimado: R$ ${custoMensal.toFixed(2)}</p>
+                `;
+                gerarGrafico(consumoDiario, consumoMensal);
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+
+        function gerarGrafico(consumoDiario, consumoMensal) {
+            const grafico = document.getElementById('grafico');
+            grafico.innerHTML = ''; // Limpa o gráfico anterior
+
+            // Define a altura máxima das barras no gráfico (200px) como base para o cálculo
+            const alturaMaxima = 200;
+            const alturaBarraDiaria = consumoDiario * 10; 
+            const alturaBarraMensal = consumoMensal * 0.33; 
+            const corBarraDiaria = consumoDiario > 2 ? '#FF5733' : '#4CAF50'; 
+            const corBarraMensal = consumoMensal > 60 ? '#FF5733' : '#4CAF50'; 
+
+            const barraDiaria = document.createElement('div');
+            barraDiaria.className = 'bar';
+            barraDiaria.style.height = `${Math.min(alturaBarraDiaria, alturaMaxima)}px`;
+            barraDiaria.style.backgroundColor = corBarraDiaria;
+            barraDiaria.innerHTML = `<span>${consumoDiario.toFixed(2)} kWh/dia</span>`;
+
+            const barraMensal = document.createElement('div');
+            barraMensal.className = 'bar';
+            barraMensal.style.height = `${Math.min(alturaBarraMensal, alturaMaxima)}px`;
+            barraMensal.style.backgroundColor = corBarraMensal;
+            barraMensal.innerHTML = `<span>${consumoMensal.toFixed(2)} kWh/mês</span>`;
+
+            grafico.appendChild(barraDiaria);
+            grafico.appendChild(barraMensal);
+        }
+    </script>
+</body>
+</html>

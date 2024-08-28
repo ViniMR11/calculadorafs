@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Energética</title>
+    <link rel="stylesheet" href="activi.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora Energética</h1>
+
+        <div class="object-selection">
+            <h2>Selecione um objeto:</h2>
+            <div class="object-gallery">
+                <img src="qua.jpg" alt="Objeto 1" class="object-image" data-object='{"length": 2, "width": 3, "thickness": 0.1, "density": 500, "specificHeat": 2000, "temperatureChange": 30}'>
+                <img src="objeto2.jpg" alt="Objeto 2" class="object-image" data-object='{"length": 1.5, "width": 2.5, "thickness": 0.05, "density": 700, "specificHeat": 1800, "temperatureChange": 25}'>
+                <img src="objeto3.jpg" alt="Objeto 3" class="object-image" data-object='{"length": 3, "width": 2, "thickness": 0.2, "density": 600, "specificHeat": 2100, "temperatureChange": 20}'>
+            </div>
+        </div>
+
+        <form id="energyCalculator">
+            <label for="length">Comprimento (m):</label>
+            <input type="number" id="length" name="length" required>
+
+            <label for="width">Largura (m):</label>
+            <input type="number" id="width" name="width" required>
+
+            <label for="thickness">Espessura (m):</label>
+            <input type="number" id="thickness" name="thickness" required>
+
+            <label for="density">Densidade (kg/m³):</label>
+            <input type="number" id="density" name="density" required>
+
+            <label for="specificHeat">Calor específico (J/kg·K):</label>
+            <input type="number" id="specificHeat" name="specificHeat" required>
+
+            <label for="temperatureChange">Variação de temperatura (°C):</label>
+            <input type="number" id="temperatureChange" name="temperatureChange" required>
+
+            <button type="submit">Calcular Energia</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script src="fisitin.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+.objects-list {
+    margin-bottom: 40px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.objects-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.objects-list li {
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.objects-list li:hover {
+    background-color: #e2e2e2;
+}
